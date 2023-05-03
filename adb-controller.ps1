@@ -1,5 +1,8 @@
 do {
-    Write-Host "Please choose an option:"
+    $packageName = adb shell 'dumpsys activity activities | grep ResumedActivity' | Select-Object -First 1 | Select-String -Pattern "u0 (.*)/" | ForEach-Object {$_.Matches.Groups[1].Value -replace ' .*',''}
+    Write-Host "`nFocuse app is: $packageName"
+
+    Write-Host "What do you wanna do with it?`n:"
     Write-Host "1- Just kill the app"
     Write-Host "2- Restart the app"
     Write-Host "3- Kill & clear the data of app"
@@ -7,7 +10,6 @@ do {
     Write-Host "Press 'Q' to quit"
 
     $choice = Read-Host "Enter your choice"
-    $packageName = adb shell 'dumpsys activity activities | grep ResumedActivity' | Select-Object -First 1 | Select-String -Pattern "u0 (.*)/" | ForEach-Object {$_.Matches.Groups[1].Value -replace ' .*',''}
 
     switch ($choice) {
         1 {
