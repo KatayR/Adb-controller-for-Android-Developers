@@ -7,7 +7,7 @@ do {
     Write-Host "1- Kill app"
     Write-Host "2- Restart app"
     Write-Host "3- Kill & clear app data"
-    Write-Host "4- Kill & clean & restart app"
+    Write-Host "4- Kill & clear & restart app"
     Write-Host "5- Clean & uninstall app"
     Write-Host "Type 'Q' to quit"
 
@@ -27,7 +27,7 @@ do {
         }
         3 {
             adb shell am force-stop $packageName
-            adb shell am start -n $packageName/$packageName.MainActivity
+            adb shell pm clear --user 0 $packageName
             Write-Host "`n Killed and cleared $packageName"
         }
         4 {
