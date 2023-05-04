@@ -1,19 +1,22 @@
 do {
     $packageName = adb shell 'dumpsys activity activities | grep ResumedActivity' | Select-Object -First 1 | Select-String -Pattern "u0 (.*)/" | ForEach-Object { $_.Matches.Groups[1].Value -replace ' .*', '' }
     Write-Host "`nFocused app is: $packageName"
+    Write-Host "Type 'R' to refresh the focused app"
 
-    Write-Host "What do you wanna do with it?:`n"
+    Write-Host "`nWhat do you wanna do with it?:`n"
     Write-Host "1- Kill app"
     Write-Host "2- Restart app"
     Write-Host "3- Kill & clear app data"
     Write-Host "4- Kill & clean & restart app"
     Write-Host "5- Clean & uninstall app"
-    Write-Host "Press 'Q' to quit"
+    Write-Host "Type 'Q' to quit"
 
     $choice = Read-Host "Enter your choice"
 
     switch ($choice) {
-        1 {
+        r {
+            continue
+        }1 {
             adb shell am force-stop $packageName
             Write-Host "`n Killed $packageName"
         }
