@@ -3,10 +3,11 @@ do {
     Write-Host "`nFocused app is: $packageName"
 
     Write-Host "What do you wanna do with it?:`n"
-    Write-Host "1- Just kill the app"
-    Write-Host "2- Restart the app"
-    Write-Host "3- Kill & clear the data of app"
-    Write-Host "4- Kill & clean & restart"
+    Write-Host "1- Kill app"
+    Write-Host "2- Restart app"
+    Write-Host "3- Kill & clear app data"
+    Write-Host "4- Kill & clean & restart app"
+    Write-Host "5- Clean & uninstall app"
     Write-Host "Press 'Q' to quit"
 
     $choice = Read-Host "Enter your choice"
@@ -31,6 +32,11 @@ do {
             adb shell pm clear --user 0 $packageName
             adb shell am start -n $packageName/$packageName.MainActivity
             Write-Host "`n Clean restarted $packageName"
+        }5 {
+            adb shell am force-stop $packageName
+            adb shell pm clear --user 0 $packageName
+            adb uninstall $packageName
+            Write-Host "`n Uninstalled $packageName"
         }
         q {
             exit
