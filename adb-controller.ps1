@@ -1,6 +1,6 @@
 do {
     $packageName = adb shell 'dumpsys activity activities | grep ResumedActivity' | Select-Object -First 1 | Select-String -Pattern "u0 (.*)/" | ForEach-Object { $_.Matches.Groups[1].Value -replace ' .*', '' }
-    Write-Host "`nFocusedtest app is: $packageName`n"
+    Write-Host "`nFocused app is: $packageName`n"
     Write-Host "  Type 'R' to refresh the focused app"
 
     Write-Host "`nWhat do you wanna do with it?:`n"
